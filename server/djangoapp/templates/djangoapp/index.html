@@ -26,17 +26,15 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
-                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
                 {% else %}
                 <li>
-                    <form action="{% url 'djangoapp:login' %}"  method="post">
+                    <form method="post">
                         {% csrf_token %}
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" >
-                            <input type="password" class="form-control" placeholder="Password" name="psw" >
-                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-primary" href="{% url 'djangoapp:login' %}">Login</a>
                             <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Signup</a>
                         </div>
                     </form>
@@ -47,12 +45,6 @@
     </nav>    
     <!--Add a dealer table here -->
     <div class="container-fluid">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-warning" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    
         <table class="table" id="table"
             data-filter-control="true">
             <thead>

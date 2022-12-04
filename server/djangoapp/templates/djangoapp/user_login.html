@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+        <meta charset="UTF-8">
     <title>Dealership Review</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -10,11 +13,8 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-
-</head>
-
+    </head>
     <body>
-    <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -31,10 +31,10 @@
                 </li>
                 {% else %}
                 <li>
-                    <form method="post">
+                    <form action="{% url 'djangoapp:login' %}"  method="post">
                         {% csrf_token %}
                         <div class="input-group">
-                            <a class="btn btn-primary" href="{% url 'djangoapp:login' %}">Login</a>
+                            <button class="btn btn-primary" type="submit">Login</button>
                             <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Signup</a>
                         </div>
                     </form>
@@ -42,12 +42,17 @@
                 {% endif %}
             </ul>
         </div>
-    </nav>    
-    <!--Add a dealer table here -->
-    <p>Address: 2738 Dealership Ln Atlanta, Georgia 47574<p>
-    <p>Phone Number: 999-999-9999</p>
-    <p>Email Address: thecardealership@dealership.com<p>
-    <p> We're here to answer your questions 24/7, feel free to contact us</p>
+    </nav>               
+        <div class="container" style=" text-align: center;">
+            <h1>Login</h1>
+            <form action="{% url 'djangoapp:login' %}"  method="post" style="margin-top: 5%;">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Username" name="username" > <br>
+                    <input type="password" class="form-control" placeholder="Password" name="psw" >
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
     </body>
-
 </html>

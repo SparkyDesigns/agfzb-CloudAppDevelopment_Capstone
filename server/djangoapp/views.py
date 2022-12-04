@@ -46,12 +46,13 @@ def login_request(request):
         if user is not None:
             # If user is valid, call login method to login current user
             login(request, user)
-            return redirect('/djangoapp')
+            return redirect('/djangoapp/')
         else:
             # If not, return to login page again
-            return render(request, 'djangoapp/index.html', context)
+            return render(request, 'djangoapp/user_login.html', context)
+            messages.warning(request, "Invalid username or password.")
     else:
-        return render(request, 'djangoapp/index.html', context)
+        return render(request, 'djangoapp/user_login.html', context)
 
 
 # Create a `logout_request` view to handle sign out request
