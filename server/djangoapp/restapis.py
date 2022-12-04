@@ -1,7 +1,12 @@
 import requests
 import json
-from .models import CarDealer
 from requests.auth import HTTPBasicAuth
+from .models import CarDealer, DealerReview
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_watson.natural_language_understanding_v1 import Features,SentimentOptions
+import time
+import logging
 
 
 # Create a `get_request` to make HTTP GET requests
@@ -97,10 +102,14 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 
     return results
 
-    def get_request(url, **kwargs):
+
+
+# Create a  get_request method to get reviews 
+def get_request(url, **kwargs):
+    
     # If argument contain API KEY
-     api_key = kwargs.get("api_key")
-     print("GET from {} ".format(url))
+    api_key = kwargs.get("api_key")
+    print("GET from {} ".format(url))
     try:
         if api_key:
             params = dict()
@@ -125,15 +134,11 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 
 def get_dealer_by_id_from_cf(url, id):
     results = []
-
     # Call get_request with a URL parameter
     json_result = get_request(url, id=id)
-
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result
-        print(dealers,"63")
-
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -150,7 +155,6 @@ def get_dealer_by_id_from_cf(url, id):
                                        st=dealer_doc["st"], 
                                        zip=dealer_doc["zip"])                    
                 results.append(dealer_obj)
-
     return results[0]
 
 

@@ -3,9 +3,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-from .models import CarMake,CarModel
+from .models import CarModel, CarMake, CarDealer, DealerReview
 # from .restapis import related methods
-from .restapis import get_dealers_from_cf
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id_from_cf,post_request   
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -101,8 +101,9 @@ def get_dealerships(request):
     if request.method == "GET":
         context = {}
         url = "https://eu-de.functions.appdomain.cloud/api/v1/web/72b51638-5218-460d-9ba3-6ec8d81099a6/dealership-package/get-dealership"
+        # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
 
 
@@ -115,7 +116,6 @@ def get_dealer_details(request, id):
         dealer_url = "https://eu-de.functions.appdomain.cloud/api/v1/web/72b51638-5218-460d-9ba3-6ec8d81099a6/dealership-package/get-dealership"
         dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         context["dealer"] = dealer
-    
         review_url = "https://eu-de.functions.appdomain.cloud/api/v1/web/72b51638-5218-460d-9ba3-6ec8d81099a6/dealership-package/get-review"
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         print(reviews)
