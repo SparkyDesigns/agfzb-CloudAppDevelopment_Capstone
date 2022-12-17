@@ -29,6 +29,8 @@ APPEND_SLASH = True
 
 ALLOWED_HOSTS = ["localhost"]
 
+CSRF_TRUSTED_ORIGINS = ['https://srsparks15-8000.theiadocker-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/']
+
 
 # Application definition
 
